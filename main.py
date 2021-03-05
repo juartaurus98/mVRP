@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 import time
-from TabuSearch_3 import TSP
+from TabuSearch import TSP
 from savingVRP import saving, updateCost
 from dbscan_with_pre_com import cluster
 

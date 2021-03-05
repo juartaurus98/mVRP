@@ -10,6 +10,8 @@ import numpy as np
 def cluster(distance_matrix, Eps, Min_samples):
 
     distance_matrix = np.array(distance_matrix)
+
+    #remove depot, just cluster customers
     distance_matrix_1 = distance_matrix[1:, 1:]
     #The current implementation uses ball trees and kd-trees to determine the neighborhood of points, which avoids calculating the full distance matrix. The possibility to use custom metrics is retained; for details, see NearestNeighbors.
     #Can use metric='precomputed' if it is the Cost_Matrix, not Lat-long
