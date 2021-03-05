@@ -1,4 +1,2 @@
 # mVRP
-Solve VRP Problem
-
-How to use:
+Solve VRP Problem using Clustering, Saving for Init and TabuSearch for Optimize
