@@ -8,7 +8,7 @@ import numpy as np
 
 
 def cluster(distance_matrix, Eps, Min_samples):
-
+    cluster_list = []
     distance_matrix = np.array(distance_matrix)
 
     #remove depot, just cluster customers
@@ -26,7 +26,12 @@ def cluster(distance_matrix, Eps, Min_samples):
     # print(clustering.labels_)
     labels = clustering.labels_
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
-    n_noise_ = list(labels).count(-1)
+    # n_noise = list(labels).count(-1)
+
+    noise_list = []
+    for idx_noise in range(len(labels)):
+        if labels[idx_noise] == -1:
+            noise_list.append(idx_noise+1)
 
     # Return each Cluster and index of points in that Cluster
     for i in range(0, n_clusters_):
@@ -45,7 +50,8 @@ def cluster(distance_matrix, Eps, Min_samples):
         # print(dimen)
         matrix_new = array.reshape(dimen, dimen)
 
-        yield tmp, matrix_new
+        cluster_list.append([tmp, matrix_new])
+    return cluster_list, noise_list
 
 # How to use Cluster function:
 # c = cluster(distance_matrix, 300, 2)

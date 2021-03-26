@@ -29,14 +29,14 @@ def updateIndexCustomer(nodes, customersList):
 
 # costMatrix, maxCapRoadMatrix is numpy array
 
-costMatrix = np.genfromtxt('../data/matrix_cost_260221_100.csv', delimiter=',')
-maxCapRoadMatrix = np.genfromtxt('../data/matrix_maxtonage_250221.csv', delimiter=',')
-demand = np.genfromtxt('../data/demand_250221.csv', delimiter=',')
-vehicle = np.genfromtxt('../data/vehicle_230221.csv', delimiter=',')
+costMatrix = np.genfromtxt('../data_02_17032021 (1)/data_02_17032021/matrix_cost.csv', delimiter=',')
+maxCapRoadMatrix = np.genfromtxt('../data_02_17032021 (1)/data_02_17032021/max_tonnage.csv', delimiter=',')
+demand = np.genfromtxt('../data_02_17032021 (1)/data_02_17032021/demand.csv', delimiter=',')
+vehicle = np.genfromtxt('../data_02_17032021 (1)/data_02_17032021/vehicle.csv', delimiter=',')
 
 
 startime = time.process_time()
-eps = 400
+eps = 18000
 minSample = 3
 timeRunTabu = 10
 totalCost = 0
@@ -45,9 +45,9 @@ totalCost = 0
 costRoadErr = np.max(costMatrix)*len(costMatrix)
 
 # clustering
-cluster = cluster(costMatrix, eps, minSample)
-for c in cluster:
+cluster, noise = cluster(costMatrix, eps, minSample)
 
+for c in cluster:
     print(c[0])
     # print(c[1])
 
@@ -58,7 +58,7 @@ for c in cluster:
     # r, c, v = saving(costMatrix, demand, capacity, maxCapRoadMatrix, customersList)
     route, vehicle, vehicleFixCustomer = saving(c[1], demand[c[0]], vehicle, maxCapRoadMatrixCustomers, c[0])
 
-    print(f'route: ')
+    print('route: ')
     for key, value in route.items():
         value['totalD'] = demand[value['nodes']].sum()
         print(f'{" " * 8}{key}:{value}')
@@ -85,6 +85,8 @@ for c in cluster:
     print(f'\nThe remaining vehicles: {vehicle}\nThe remaining customers:{vehicleFixCustomer}')
     print("===========================")
 
+
+print("List of noise points: ", noise)
 print("Run time: ", time.process_time() - startime)
 print("Total Cost: ", totalCost)
 
